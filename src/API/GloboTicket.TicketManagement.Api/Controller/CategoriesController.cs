@@ -1,4 +1,6 @@
 using GloboTicket.TicketManagement.Application.Features.Categories.Commands.CreateCategory;
+using GloboTicket.TicketManagement.Application.Features.Categories.Queries.GetCategoryDetailById;
+using GloboTicket.TicketManagement.Application.Features.Categories.Queries.GetCategoryDetailByName;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,33 @@ public class CategoriesController : ControllerBase
         if (!result.Success)
         {
             return BadRequest(result);
+        }
+        return Ok(result); 
+    }
+    
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCategoryDetail([FromQuery] GetCategoryDetailByNameQuery query, CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(query, cancellationToken);
+        if (!result.Success)
+        {
+            return NotFound(result);
+        }
+        return Ok(result); 
+    }
+    
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCategoryDetail([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var query = new GetCategoryDetailByIdQuery { Id = id };
+        var result = await _sender.Send(query, cancellationToken);
+        if (!result.Success)
+        {
+            return NotFound(result);
         }
         return Ok(result); 
     }
