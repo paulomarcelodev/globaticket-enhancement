@@ -24,7 +24,6 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
         if (!validationResult.IsValid)
         {
             response.Success = false;
-            response.ValidationErrors = new List<string>();
             foreach (var error in validationResult.Errors)   
             {
                 response.ValidationErrors.Add(error.ErrorMessage);

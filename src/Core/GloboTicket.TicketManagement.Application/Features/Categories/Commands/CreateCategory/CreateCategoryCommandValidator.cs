@@ -23,6 +23,6 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
 
     private async Task<bool> CategoryNameUnique(CreateCategoryCommand c, CancellationToken token)
     {
-        return !await _categoryRepository.IsCategoryNameUnique(c.Name);
+        return !await _categoryRepository.IsCategoryNameUnique(c.Name!);
     }
 }
