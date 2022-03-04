@@ -6,14 +6,11 @@ namespace GloboTicket.TicketManagement.Application.Features.Categories.Commands.
 public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {
     private readonly ICategoryRepository _categoryRepository;
-
+    
     public CreateCategoryCommandValidator(ICategoryRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
-    }
-
-    public CreateCategoryCommandValidator()
-    {
+        
         RuleFor(p => p.Name)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .NotNull()

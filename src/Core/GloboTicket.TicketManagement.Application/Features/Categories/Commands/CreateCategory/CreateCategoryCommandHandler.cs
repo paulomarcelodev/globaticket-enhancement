@@ -19,7 +19,7 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
     public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var response = new CreateCategoryCommandResponse();
-        var validator = new CreateCategoryCommandValidator();
+        var validator = new CreateCategoryCommandValidator(_categoryRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
         {
@@ -34,7 +34,7 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
         {
             var category = _mapper.Map<Category>(request);
             category = await _categoryRepository.AddAsync(category);
-            response.Category = _mapper.Map<CreateCategoryDto>(category);
+            response.Data = _mapper.Map<CreateCategoryDto>(category);
         }
         return response;
     }

@@ -8,5 +8,5 @@ public class CreateCategoryCommandResponse : BaseResponse
     {
     }
 
-    public CreateCategoryDto Category { get; set; }
+    public CreateCategoryDto Data { get; set; }
 }
